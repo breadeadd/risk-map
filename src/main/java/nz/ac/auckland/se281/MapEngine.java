@@ -15,6 +15,9 @@ public class MapEngine {
 
     List<String> countries = Utils.readCountries();
     List<String> adjacencies = Utils.readAdjacencies();
+
+    // make countries from file to list "countries"
+    // countryinfo[] <-- loco name, cont, fuel
   }
 
   /** this method is invoked when the user run the command info-country. */
