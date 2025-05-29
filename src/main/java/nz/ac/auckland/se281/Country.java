@@ -5,7 +5,7 @@ public class Country {
   String continent;
   int fuelCost;
 
-  public void country(String name, String continent, int fuelCost) {
+  public Country(String name, String continent, int fuelCost) {
     this.name = name;
     this.continent = continent;
     this.fuelCost = fuelCost;
