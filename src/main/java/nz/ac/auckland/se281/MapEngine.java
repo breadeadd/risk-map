@@ -2,7 +2,6 @@ package nz.ac.auckland.se281;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 /** This class is the main entry point. */
@@ -27,6 +26,7 @@ public class MapEngine {
     // make countries from file to list "countries"
     // countryinfo[] <-- loco name, cont, fuel
 
+    // saving all the countries
     for (String country : countries) {
       String[] countryInfo = country.split(",");
       Country addCountry =
@@ -48,25 +48,24 @@ public class MapEngine {
         Country neighbourCountry = map.getCountryByName(neighbour);
 
         map.addEdge(currentCountry, neighbourCountry);
+
+        // make a hashmap storing country to adjacents concat
       }
     }
   }
 
   /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
-    Scanner scanner = new Scanner(System.in);
     String country;
     String input;
 
     MessageCli.INSERT_COUNTRY.printMessage();
 
     // storing input
-    input = scanner.nextLine();
+    input = Utils.scanner.nextLine();
 
     // sorting input
     country = Utils.capitalizeFirstLetterOfEachWord(input);
-
-    scanner.close();
 
     for (Country check : countryStats) {
       if (country.equals(check.getName())) {
@@ -75,6 +74,8 @@ public class MapEngine {
         return;
       }
     }
+
+    return;
     // else throw exception - with message super set as message cli
 
   }

@@ -36,4 +36,8 @@ public class Graph {
   public Country getCountryByName(String name) {
     return nameToCountry.get(name);
   }
+
+  public List<Country> getAdjacent(Country country) {
+    return adjNodes.getOrDefault(country, new ArrayList<>());
+  }
 }
