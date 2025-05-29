@@ -39,31 +39,28 @@ public class Country {
     String textOut = "[";
     for (Country neighbour : neighbours) {
       textOut = textOut.concat(neighbour.getName());
-      textOut = textOut.concat(" ");
+      textOut = textOut.concat(", ");
     }
+
+    // last iteration
     textOut = textOut.trim();
+    textOut = textOut.substring(0, textOut.length() - 1);
     textOut = textOut.concat("]");
 
     return textOut;
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    return result;
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+
+    Country other = (Country) obj;
+    return name.equals(other.name);
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
-    Country other = (Country) obj;
-    if (id == null) {
-      if (other.id != null) return false;
-    } else if (!id.equals(other.id)) return false;
-    return true;
+  public int hashCode() {
+    return name.hashCode();
   }
 }

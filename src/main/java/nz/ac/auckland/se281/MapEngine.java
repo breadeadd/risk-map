@@ -68,11 +68,14 @@ public class MapEngine {
     // sorting input
     country = Utils.capitalizeFirstLetterOfEachWord(input);
 
+    // printing info
     for (Country check : countryStats) {
       if (country.equals(check.getName())) {
         MessageCli.COUNTRY_INFO.printMessage(
-            check.getName(), check.getContinent(), check.getFuelCost() + "", "");
-        return;
+            check.getName(),
+            check.getContinent(),
+            check.getFuelCost() + "",
+            check.printNeighbours());
       }
     }
 
