@@ -1,10 +1,14 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Country {
   private String id;
   private String name;
   private String continent;
   private int fuelCost;
+  private List<Country> neighbours = new ArrayList<>();
 
   public Country(String name, String continent, int fuelCost) {
     this.name = name;
@@ -24,6 +28,11 @@ public class Country {
 
   public int getFuelCost() {
     return fuelCost;
+  }
+
+  public void addNeighbours(Country neighbour) {
+    neighbours.add(neighbour);
+    return;
   }
 
   @Override
