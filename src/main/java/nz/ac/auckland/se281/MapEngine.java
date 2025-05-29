@@ -74,11 +74,9 @@ public class MapEngine {
       // printing info
       for (Country check : countryStats) {
         if (country.equals(check.getName())) {
+          String neighbourText = "[" + check.printNeighbours() + "]";
           MessageCli.COUNTRY_INFO.printMessage(
-              check.getName(),
-              check.getContinent(),
-              check.getFuelCost() + "",
-              check.printNeighbours());
+              check.getName(), check.getContinent(), check.getFuelCost() + "", neighbourText);
 
           valid = true;
           return;

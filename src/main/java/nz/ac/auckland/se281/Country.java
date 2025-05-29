@@ -35,7 +35,7 @@ public class Country {
   }
 
   public String printNeighbours() {
-    String textOut = "[";
+    String textOut = "";
     for (Country neighbour : neighbours) {
       textOut = textOut.concat(neighbour.getName());
       textOut = textOut.concat(", ");
@@ -44,7 +44,6 @@ public class Country {
     // last iteration
     textOut = textOut.trim();
     textOut = textOut.substring(0, textOut.length() - 1);
-    textOut = textOut.concat("]");
 
     return textOut;
   }
