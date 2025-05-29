@@ -59,24 +59,33 @@ public class MapEngine {
   public void showInfoCountry() {
     String country;
     String input;
+    Boolean valid = false;
 
-    MessageCli.INSERT_COUNTRY.printMessage();
+    while (!valid) {
 
-    // storing input
-    input = Utils.scanner.nextLine();
+      MessageCli.INSERT_COUNTRY.printMessage();
 
-    // sorting input
-    country = Utils.capitalizeFirstLetterOfEachWord(input);
+      // storing input
+      input = Utils.scanner.nextLine();
 
-    // printing info
-    for (Country check : countryStats) {
-      if (country.equals(check.getName())) {
-        MessageCli.COUNTRY_INFO.printMessage(
-            check.getName(),
-            check.getContinent(),
-            check.getFuelCost() + "",
-            check.printNeighbours());
+      // sorting input
+      country = Utils.capitalizeFirstLetterOfEachWord(input);
+
+      // printing info
+      for (Country check : countryStats) {
+        if (country.equals(check.getName())) {
+          MessageCli.COUNTRY_INFO.printMessage(
+              check.getName(),
+              check.getContinent(),
+              check.getFuelCost() + "",
+              check.printNeighbours());
+
+          valid = true;
+          return;
+        }
       }
+
+      MessageCli.INVALID_COUNTRY.printMessage(country);
     }
 
     return;

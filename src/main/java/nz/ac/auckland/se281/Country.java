@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
-  private String id;
   private String name;
   private String continent;
   private int fuelCost;
