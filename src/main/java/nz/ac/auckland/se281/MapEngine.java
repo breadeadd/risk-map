@@ -93,5 +93,34 @@ public class MapEngine {
   }
 
   /** this method is invoked when the user run the command route. */
-  public void showRoute() {}
+  public void showRoute() {
+    String startCountry;
+    String startIn;
+
+    String finalInput;
+    String destination;
+
+    // starting country
+    MessageCli.INSERT_SOURCE.printMessage();
+    // storing input
+    startIn = Utils.scanner.nextLine();
+    // sorting input
+    startCountry = Utils.capitalizeFirstLetterOfEachWord(startIn);
+
+    //
+    // destination country
+    MessageCli.INSERT_SOURCE.printMessage();
+
+    // destination country
+    MessageCli.INSERT_SOURCE.printMessage();
+    // storing input
+    finalInput = Utils.scanner.nextLine();
+    // sorting input
+    destination = Utils.capitalizeFirstLetterOfEachWord(startIn);
+
+    // if same
+    if (startCountry.equals(destination)) {
+      MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+    }
+  }
 }
