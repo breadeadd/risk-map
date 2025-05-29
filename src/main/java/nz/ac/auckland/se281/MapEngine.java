@@ -7,11 +7,13 @@ import java.util.Scanner;
 /** This class is the main entry point. */
 public class MapEngine {
 
-  ArrayList<Country> countryStats = new ArrayList<>();
+  private List<Country> countryStats = new ArrayList<>();
+  private Graph map;
 
   public MapEngine() {
-    // add other code here if you wan
-    loadMap(); // keep this mehtod invocation
+    // add other code here if you want
+    map = new Graph();
+    loadMap(); // keep this method invocation
   }
 
   /** invoked one time only when constracting the MapEngine class. */
@@ -30,6 +32,17 @@ public class MapEngine {
       // might need to turn countryInfo[1] to an enum
 
       countryStats.add(addCountry);
+      map.addNode(addCountry);
+    }
+
+    for (String adjacents : adjacencies) {
+      String[] edges = adjacents.split(",");
+      String currentCountry = edges[0];
+
+      // for (int i = 1; i < edges.length; i++) {
+      //   map.addEdge(edges[0], edges[i]);
+      // }
+
     }
   }
 
