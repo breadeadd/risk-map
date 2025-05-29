@@ -1,18 +1,20 @@
 package nz.ac.auckland.se281;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /** This class is the main entry point. */
 public class MapEngine {
 
-  private List<Country> countryStats = new ArrayList<>();
+  private Set<Country> countryStats = new HashSet<>();
   private Graph map;
 
   public MapEngine() {
     // add other code here if you want
     map = new Graph();
+
     loadMap(); // keep this method invocation
   }
 
@@ -37,12 +39,16 @@ public class MapEngine {
 
     for (String adjacents : adjacencies) {
       String[] edges = adjacents.split(",");
-      String currentCountry = edges[0];
+      String country = edges[0];
+      Country currentCountry = map.getCountryByName(country);
 
-      // for (int i = 1; i < edges.length; i++) {
-      //   map.addEdge(edges[0], edges[i]);
-      // }
+      // adding edges
+      for (int i = 1; i < edges.length; i++) {
+        String neighbour = edges[i];
+        Country neighbourCountry = map.getCountryByName(neighbour);
 
+        map.addEdge(currentCountry, neighbourCountry);
+      }
     }
   }
 

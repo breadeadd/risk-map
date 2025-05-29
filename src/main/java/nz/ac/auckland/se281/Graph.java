@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Graph {
   private Map<Country, List<Country>> adjNodes;
+  private Map<String, Country> nameToCountry = new HashMap<>();
 
   public Graph() {
     this.adjNodes = new HashMap<>();
@@ -14,11 +15,11 @@ public class Graph {
 
   public void addNode(Country node) {
     adjNodes.putIfAbsent(node, new ArrayList<>());
+    nameToCountry.putIfAbsent(node.getName(), node);
   }
 
-  public void addEdge(Country node) {
-    addNode(node); // might not need?
-    adjNodes.get(node);
+  public void addEdge(Country node1, Country node2) {
+    adjNodes.get(node1).add(node2);
   }
 
   public String toString() {
@@ -30,5 +31,9 @@ public class Graph {
       sb.append(System.lineSeparator());
     }
     return sb.toString();
+  }
+
+  public Country getCountryByName(String name) {
+    return nameToCountry.get(name);
   }
 }
