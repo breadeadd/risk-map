@@ -35,6 +35,18 @@ public class Country {
     return;
   }
 
+  public String printNeighbours() {
+    String textOut = "[";
+    for (Country neighbour : neighbours) {
+      textOut = textOut.concat(neighbour.getName());
+      textOut = textOut.concat(" ");
+    }
+    textOut = textOut.trim();
+    textOut = textOut.concat("]");
+
+    return textOut;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;

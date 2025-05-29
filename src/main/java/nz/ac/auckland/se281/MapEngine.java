@@ -49,7 +49,8 @@ public class MapEngine {
 
         map.addEdge(currentCountry, neighbourCountry);
 
-        // make a hashmap storing country to adjacents concat
+        // add neighbours to country
+        currentCountry.addNeighbours(neighbourCountry);
       }
     }
   }
