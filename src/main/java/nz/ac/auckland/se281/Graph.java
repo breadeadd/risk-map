@@ -24,6 +24,7 @@ public class Graph {
     adjNodes.get(node1).add(node2);
   }
 
+  // might not need
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (Country n : adjNodes.keySet()) {
@@ -36,20 +37,32 @@ public class Graph {
   }
 
   public Country getCountryByName(String name) {
-    return nameToCountry.get(name);
+    Country country = nameToCountry.get(name);
+    return country;
   }
 
   public List<Country> getAdjacent(Country country) {
     return adjNodes.getOrDefault(country, new ArrayList<>());
   }
 
-  public List<Country> breathFirstTraversal(Country root) {
+  public Country checkCountryExists(String name) throws CountryNotFoundException {
+    Country country = nameToCountry.get(name);
+    if (country == null) {
+      throw new CountryNotFoundException(name);
+    }
+    return country;
+  }
+
+  // will need to edit.
+  public List<Country> findShortestRoute(Country start, Country destination) {
     List<Country> visited = new ArrayList<>();
     Queue<Country> queue = new LinkedList<>();
-    queue.add(root);
-    visited.add(root);
+    queue.add(start);
+    visited.add(start);
+
     while (!queue.isEmpty()) {
       Country node = queue.poll();
+
       for (Country n : adjNodes.get(node)) {
         if (!visited.contains(n)) {
           visited.add(n);

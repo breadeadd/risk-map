@@ -58,36 +58,44 @@ public class MapEngine {
   /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
     String country;
-    String input;
-    Boolean valid = false;
 
-    while (!valid) {
+    MessageCli.INSERT_COUNTRY.printMessage();
+    country = checkCountryInput();
 
-      MessageCli.INSERT_COUNTRY.printMessage();
+    // printing info
+    for (Country check : countryStats) {
+      if (country.equals(check.getName())) {
+        String neighbourText = "[" + check.printNeighbours() + "]";
+        MessageCli.COUNTRY_INFO.printMessage(
+            check.getName(), check.getContinent(), check.getFuelCost() + "", neighbourText);
 
-      // storing input
-      input = Utils.scanner.nextLine();
-
-      // sorting input
-      country = Utils.capitalizeFirstLetterOfEachWord(input);
-
-      // printing info
-      for (Country check : countryStats) {
-        if (country.equals(check.getName())) {
-          String neighbourText = "[" + check.printNeighbours() + "]";
-          MessageCli.COUNTRY_INFO.printMessage(
-              check.getName(), check.getContinent(), check.getFuelCost() + "", neighbourText);
-
-          valid = true;
-          return;
-        }
+        return;
       }
-
-      MessageCli.INVALID_COUNTRY.printMessage(country);
     }
+
+    MessageCli.INVALID_COUNTRY.printMessage(country);
 
     return;
     // else throw exception - with message super set as message cli
+  }
+
+  // throwing exception method
+  public String checkCountryInput() {
+    String input;
+    while (true) {
+      try {
+        // storing input
+        input = Utils.scanner.nextLine();
+
+        // sorting input
+        input = Utils.capitalizeFirstLetterOfEachWord(input);
+        map.checkCountryExists(input);
+      } catch (CountryNotFoundException e) {
+        continue;
+      }
+      break;
+    }
+    return input;
   }
 
   /** this method is invoked when the user run the command route. */
@@ -105,20 +113,24 @@ public class MapEngine {
     // sorting input
     startCountry = Utils.capitalizeFirstLetterOfEachWord(startIn);
 
-    //
-    // destination country
-    MessageCli.INSERT_SOURCE.printMessage();
+    // check if valid
 
     // destination country
-    MessageCli.INSERT_SOURCE.printMessage();
+    MessageCli.INSERT_DESTINATION.printMessage();
     // storing input
     finalInput = Utils.scanner.nextLine();
     // sorting input
     destination = Utils.capitalizeFirstLetterOfEachWord(startIn);
 
+    // check if valid
+
     // if same
     if (startCountry.equals(destination)) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+      return;
+    } else {
+      // will need to convert to country type
+      // map.findShortestRoute(startCountry, destination);
     }
   }
 }
