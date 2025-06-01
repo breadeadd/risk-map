@@ -11,7 +11,7 @@ import java.util.Set;
 public class MapEngine {
 
   private Set<Country> countryStats = new HashSet<>();
-  private Map<Continents, Integer> fuelCounts = new HashMap<>();
+  private Map<String, Integer> fuelCounts = new HashMap<>();
   private Graph map;
 
   public MapEngine() {
@@ -26,12 +26,12 @@ public class MapEngine {
         // Assigning keys and values
         if (!isInitialized) {
           // initalise counts
-          fuelCounts.put(Continents.NORTHAMERICA, 0);
-          fuelCounts.put(Continents.SOUTHAMERICA, 0);
-          fuelCounts.put(Continents.AFRICA, 0);
-          fuelCounts.put(Continents.EUROPE, 0);
-          fuelCounts.put(Continents.ASIA, 0);
-          fuelCounts.put(Continents.AUSTRALIA, 0);
+          fuelCounts.put("North America", 0);
+          fuelCounts.put("South America", 0);
+          fuelCounts.put("Africa", 0);
+          fuelCounts.put("Europe", 0);
+          fuelCounts.put("Asia", 0);
+          fuelCounts.put("Australia", 0);
 
           isInitialized = true;
         }
@@ -55,9 +55,9 @@ public class MapEngine {
     // saving all the countries
     for (String country : countries) {
       String[] countryInfo = country.split(",");
-      Continents continent = assignContinent(countryInfo[1]);
 
-      Country addCountry = new Country(countryInfo[0], continent, Integer.parseInt(countryInfo[2]));
+      Country addCountry =
+          new Country(countryInfo[0], countryInfo[1], Integer.parseInt(countryInfo[2]));
       // might need to turn countryInfo[1] to an enum
 
       countryStats.add(addCountry);
@@ -82,30 +82,6 @@ public class MapEngine {
     }
   }
 
-  public Continents assignContinent(String continent) {
-    switch (continent) {
-      case "South America":
-        return Continents.SOUTHAMERICA;
-
-      case "North America":
-        return Continents.NORTHAMERICA;
-
-      case "Africa":
-        return Continents.AFRICA;
-
-      case "Europe":
-        return Continents.EUROPE;
-
-      case "Asia":
-        return Continents.ASIA;
-
-      case "Australia":
-        return Continents.AUSTRALIA;
-      default:
-        return null;
-    }
-  }
-
   /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
     String country;
@@ -118,10 +94,7 @@ public class MapEngine {
       if (country.equals(check.getName())) {
         String neighbourText = "[" + check.printNeighbours() + "]";
         MessageCli.COUNTRY_INFO.printMessage(
-            check.getName(),
-            check.getContinent().getName(),
-            check.getFuelCost() + "",
-            neighbourText);
+            check.getName(), check.getContinent(), check.getFuelCost() + "", neighbourText);
 
         return;
       }
@@ -162,7 +135,7 @@ public class MapEngine {
     Country destination = null;
 
     List<Country> shortestPath = null;
-    List<Continents> visitedContinents = new ArrayList<>();
+    List<String> visitedContinents = new ArrayList<>();
 
     // starting country
     MessageCli.INSERT_SOURCE.printMessage();
@@ -212,14 +185,11 @@ public class MapEngine {
       // can add continent to a hashmap count? with Continent + fuel count
       // make sure to exclude first and last countries from calculation
 
-      for (Country country : countryStats) {
-        // skip first and last country
-        if (country.getName().equals(startCountry.getName())
-            || country.getName().equals(destination.getName())) {
-          continue;
-        }
+      // might need to change to shortest path
+      for (Country country : shortestPath) {
+        System.out.println(country.getName() + "," + country.getContinent());
 
-        Continents continent;
+        String continent;
         continent = country.getContinent();
 
         // add continent to lists
@@ -227,10 +197,41 @@ public class MapEngine {
           visitedContinents.add(continent);
         }
 
-        fuelCounts.put(continent, fuelCounts.get(continent) + country.getFuelCost());
+        // skip first and last country - fuel count
+        if (country.getName().equals(startCountry.getName())
+            || country.getName().equals(destination.getName())) {
+          continue;
+        } else if (shortestPath.contains(country)) {
+          fuelCounts.put(continent, fuelCounts.get(continent) + country.getFuelCost());
+        }
       }
 
       // add in the printing
+      // "[Europe (10), Asia (22), Australia (5)]"
+      String continentMessage = "[";
+
+      for (String visited : visitedContinents) {
+        continentMessage = continentMessage.concat(visited + " (");
+        continentMessage = continentMessage.concat(fuelCounts.get(visited) + "), ");
+      }
+
+      // last iteration
+      continentMessage = continentMessage.trim();
+      continentMessage = continentMessage.substring(0, continentMessage.length() - 2);
+      continentMessage = continentMessage.concat("]");
+
+      // print message
+      MessageCli.CONTINENT_INFO.printMessage(continentMessage);
+
+      /////////////////////////
+      // sorting out fuel costs
+      int fuelCost = 0;
+
+      for (String visited : visitedContinents) {
+        fuelCost += fuelCounts.get(visited);
+      }
+
+      MessageCli.FUEL_INFO.printMessage(fuelCost + "");
     }
     return;
   }
