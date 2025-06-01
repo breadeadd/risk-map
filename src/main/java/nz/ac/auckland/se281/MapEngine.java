@@ -217,7 +217,7 @@ public class MapEngine {
 
       // last iteration
       continentMessage = continentMessage.trim();
-      continentMessage = continentMessage.substring(0, continentMessage.length() - 2);
+      continentMessage = continentMessage.substring(0, continentMessage.length() - 1);
       continentMessage = continentMessage.concat("]");
 
       // print message
