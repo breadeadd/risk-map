@@ -70,7 +70,7 @@ public class Graph {
       Country current = queue.poll();
 
       if (current.equals(destination)) {
-        for (Country country = destination; country != null; parentMap.get(country))
+        for (Country country = destination; country != null; country = parentMap.get(country))
           // adds to the front of the list
           shortestPath.addFirst(country);
 

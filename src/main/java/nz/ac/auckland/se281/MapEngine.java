@@ -101,28 +101,58 @@ public class MapEngine {
 
   /** this method is invoked when the user run the command route. */
   public void showRoute() {
-    String startCountry;
-    String destination;
+    String start;
+    String end;
+
+    Country startCountry = null;
+    Country destination = null;
+
+    List<Country> shortestPath = null;
 
     // starting country
-    MessageCli.INSERT_COUNTRY.printMessage();
-    startCountry = checkCountryInput();
+    MessageCli.INSERT_SOURCE.printMessage();
+    start = checkCountryInput();
 
     // check if valid
 
     // destination country
-    MessageCli.INSERT_COUNTRY.printMessage();
-    destination = checkCountryInput();
+    MessageCli.INSERT_DESTINATION.printMessage();
+    end = checkCountryInput();
 
     // check if valid
 
     // if same
-    if (startCountry.equals(destination)) {
+    if (start.equals(end)) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
       return;
     } else {
-      // will need to convert to country type
-      // map.findShortestRoute(startCountry, destination);
+      // converting to country type
+      for (Country check : countryStats) {
+        if (start.equals(check.getName())) {
+          startCountry = check;
+        }
+
+        if (end.equals(check.getName())) {
+          destination = check;
+        }
+      }
+
+      shortestPath = map.findShortestRoute(startCountry, destination);
+
+      // creating string
+      String routeMessage = "[";
+      for (Country country : shortestPath) {
+        routeMessage = routeMessage.concat(country.getName());
+        routeMessage = routeMessage.concat(", ");
+      }
+
+      // last iteration
+      routeMessage = routeMessage.trim();
+      routeMessage = routeMessage.substring(0, routeMessage.length() - 1);
+      routeMessage = routeMessage.concat("]");
+
+      MessageCli.ROUTE_INFO.printMessage(routeMessage);
     }
+    return;
   }
 }
