@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -161,6 +162,7 @@ public class MapEngine {
     Country destination = null;
 
     List<Country> shortestPath = null;
+    List<Continents> visitedContinents = new ArrayList<>();
 
     // starting country
     MessageCli.INSERT_SOURCE.printMessage();
@@ -210,7 +212,25 @@ public class MapEngine {
       // can add continent to a hashmap count? with Continent + fuel count
       // make sure to exclude first and last countries from calculation
 
-      for (Country country : countryStats) {}
+      for (Country country : countryStats) {
+        // skip first and last country
+        if (country.getName().equals(startCountry.getName())
+            || country.getName().equals(destination.getName())) {
+          continue;
+        }
+
+        Continents continent;
+        continent = country.getContinent();
+
+        // add continent to lists
+        if (!visitedContinents.contains(continent)) {
+          visitedContinents.add(continent);
+        }
+
+        fuelCounts.put(continent, fuelCounts.get(continent) + country.getFuelCost());
+      }
+
+      // add in the printing
     }
     return;
   }
