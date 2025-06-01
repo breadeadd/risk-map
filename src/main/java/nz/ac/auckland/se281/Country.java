@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Country {
   private String name;
-  private String continent;
+  private Continents continent;
   private int fuelCost;
   private List<Country> neighbours = new ArrayList<>();
 
-  public Country(String name, String continent, int fuelCost) {
+  public Country(String name, Continents continent, int fuelCost) {
     this.name = name;
     this.continent = continent;
     this.fuelCost = fuelCost;
@@ -21,7 +21,7 @@ public class Country {
     return name;
   }
 
-  public String getContinent() {
+  public Continents getContinent() {
     return continent;
   }
 

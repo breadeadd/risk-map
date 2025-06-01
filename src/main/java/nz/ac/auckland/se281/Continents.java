@@ -8,9 +8,8 @@ public enum Continents {
   ASIA("Asia"),
   AUSTRALIA("Australia");
 
-  private final String name;
+  private String name;
 
-  // Constructor (must be private or package-private)
   Continents(String name) {
     this.name = name;
   }

@@ -1,18 +1,43 @@
 package nz.ac.auckland.se281;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /** This class is the main entry point. */
 public class MapEngine {
 
   private Set<Country> countryStats = new HashSet<>();
+  private Map<Continents, Integer> fuelCounts = new HashMap<>();
   private Graph map;
 
   public MapEngine() {
     // add other code here if you want
     map = new Graph();
+
+    // initializing hashmap
+    class Initialization {
+      private boolean isInitialized = false;
+
+      public void initializeCounts() {
+        // Assigning keys and values
+        if (!isInitialized) {
+          // initalise counts
+          fuelCounts.put(Continents.NORTHAMERICA, 0);
+          fuelCounts.put(Continents.SOUTHAMERICA, 0);
+          fuelCounts.put(Continents.AFRICA, 0);
+          fuelCounts.put(Continents.EUROPE, 0);
+          fuelCounts.put(Continents.ASIA, 0);
+          fuelCounts.put(Continents.AUSTRALIA, 0);
+
+          isInitialized = true;
+        }
+      }
+    }
+
+    new Initialization().initializeCounts();
 
     loadMap(); // keep this method invocation
   }
@@ -29,8 +54,9 @@ public class MapEngine {
     // saving all the countries
     for (String country : countries) {
       String[] countryInfo = country.split(",");
-      Country addCountry =
-          new Country(countryInfo[0], countryInfo[1], Integer.parseInt(countryInfo[2]));
+      Continents continent = assignContinent(countryInfo[1]);
+
+      Country addCountry = new Country(countryInfo[0], continent, Integer.parseInt(countryInfo[2]));
       // might need to turn countryInfo[1] to an enum
 
       countryStats.add(addCountry);
@@ -55,6 +81,30 @@ public class MapEngine {
     }
   }
 
+  public Continents assignContinent(String continent) {
+    switch (continent) {
+      case "South America":
+        return Continents.SOUTHAMERICA;
+
+      case "North America":
+        return Continents.NORTHAMERICA;
+
+      case "Africa":
+        return Continents.AFRICA;
+
+      case "Europe":
+        return Continents.EUROPE;
+
+      case "Asia":
+        return Continents.ASIA;
+
+      case "Australia":
+        return Continents.AUSTRALIA;
+      default:
+        return null;
+    }
+  }
+
   /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
     String country;
@@ -67,7 +117,10 @@ public class MapEngine {
       if (country.equals(check.getName())) {
         String neighbourText = "[" + check.printNeighbours() + "]";
         MessageCli.COUNTRY_INFO.printMessage(
-            check.getName(), check.getContinent(), check.getFuelCost() + "", neighbourText);
+            check.getName(),
+            check.getContinent().getName(),
+            check.getFuelCost() + "",
+            neighbourText);
 
         return;
       }
@@ -152,6 +205,12 @@ public class MapEngine {
       routeMessage = routeMessage.concat("]");
 
       MessageCli.ROUTE_INFO.printMessage(routeMessage);
+
+      // Creating continent info
+      // can add continent to a hashmap count? with Continent + fuel count
+      // make sure to exclude first and last countries from calculation
+
+      for (Country country : countryStats) {}
     }
     return;
   }
