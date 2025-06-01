@@ -211,8 +211,7 @@ public class MapEngine {
       String continentMessage = "[";
 
       for (String visited : visitedContinents) {
-        continentMessage = continentMessage.concat(visited + " (");
-        continentMessage = continentMessage.concat(fuelCounts.get(visited) + "), ");
+        continentMessage += String.format("%s (%d), ", visited, fuelCounts.get(visited));
       }
 
       // last iteration
@@ -223,7 +222,6 @@ public class MapEngine {
       // print message
       MessageCli.CONTINENT_INFO.printMessage(continentMessage);
 
-      /////////////////////////
       // sorting out fuel costs
       int fuelCost = 0;
 
@@ -232,6 +230,21 @@ public class MapEngine {
       }
 
       MessageCli.FUEL_INFO.printMessage(fuelCost + "");
+
+      // comparing fuel costs
+
+      int highestFuelCost = 0;
+      String highestContinent = null;
+
+      for (String continent : visitedContinents) {
+        if (fuelCounts.get(continent) > highestFuelCost) {
+          highestFuelCost = fuelCounts.get(continent);
+          highestContinent = continent;
+        }
+      }
+      String highestFuel = String.format("%s (%d)", highestContinent, highestFuelCost);
+
+      MessageCli.FUEL_CONTINENT_INFO.printMessage(highestFuel);
     }
     return;
   }
