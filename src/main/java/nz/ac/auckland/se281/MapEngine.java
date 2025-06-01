@@ -91,6 +91,7 @@ public class MapEngine {
         input = Utils.capitalizeFirstLetterOfEachWord(input);
         map.checkCountryExists(input);
       } catch (CountryNotFoundException e) {
+        System.out.println(e.getMessage());
         continue;
       }
       break;
@@ -101,26 +102,17 @@ public class MapEngine {
   /** this method is invoked when the user run the command route. */
   public void showRoute() {
     String startCountry;
-    String startIn;
-
-    String finalInput;
     String destination;
 
     // starting country
-    MessageCli.INSERT_SOURCE.printMessage();
-    // storing input
-    startIn = Utils.scanner.nextLine();
-    // sorting input
-    startCountry = Utils.capitalizeFirstLetterOfEachWord(startIn);
+    MessageCli.INSERT_COUNTRY.printMessage();
+    startCountry = checkCountryInput();
 
     // check if valid
 
     // destination country
-    MessageCli.INSERT_DESTINATION.printMessage();
-    // storing input
-    finalInput = Utils.scanner.nextLine();
-    // sorting input
-    destination = Utils.capitalizeFirstLetterOfEachWord(startIn);
+    MessageCli.INSERT_COUNTRY.printMessage();
+    destination = checkCountryInput();
 
     // check if valid
 
