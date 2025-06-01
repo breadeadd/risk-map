@@ -242,6 +242,11 @@ public class MapEngine {
           highestContinent = continent;
         }
       }
+
+      if (highestContinent == null) {
+        highestContinent = visitedContinents.get(0);
+      }
+
       String highestFuel = String.format("%s (%d)", highestContinent, highestFuelCost);
 
       MessageCli.FUEL_CONTINENT_INFO.printMessage(highestFuel);
