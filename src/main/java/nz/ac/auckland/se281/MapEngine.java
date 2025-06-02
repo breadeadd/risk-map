@@ -149,7 +149,6 @@ public class MapEngine {
     // if same
     if (start.equals(end)) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
-      return;
     } else {
       // converting to country type
       for (Country check : countryStats) {

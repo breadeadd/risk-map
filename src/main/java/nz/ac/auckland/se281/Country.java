@@ -51,8 +51,11 @@ public class Country {
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
+      // if both objects are the same instance
+      // no need to check further
       return true;
     }
+    // if obj is null or not of the same class, return false
     if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
