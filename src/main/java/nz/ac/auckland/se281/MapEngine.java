@@ -101,9 +101,6 @@ public class MapEngine {
     }
 
     MessageCli.INVALID_COUNTRY.printMessage(country);
-
-    return;
-    // else throw exception - with message super set as message cli
   }
 
   // throwing exception method
@@ -134,7 +131,7 @@ public class MapEngine {
     Country startCountry = null;
     Country destination = null;
 
-    List<Country> shortestPath = null;
+    List<Country> shortestPath;
     List<String> visitedContinents = new ArrayList<>();
 
     // starting country
@@ -251,6 +248,5 @@ public class MapEngine {
 
       MessageCli.FUEL_CONTINENT_INFO.printMessage(highestFuel);
     }
-    return;
   }
 }

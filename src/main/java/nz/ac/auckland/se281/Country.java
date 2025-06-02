@@ -9,14 +9,14 @@ public class Country {
   private int fuelCost;
   private List<Country> neighbours = new ArrayList<>();
 
+  // setting variables
   public Country(String name, String continent, int fuelCost) {
     this.name = name;
     this.continent = continent;
     this.fuelCost = fuelCost;
-
-    return;
   }
 
+  // getters
   public String getName() {
     return name;
   }
@@ -31,9 +31,9 @@ public class Country {
 
   public void addNeighbours(Country neighbour) {
     neighbours.add(neighbour);
-    return;
   }
 
+  // create neighbour string
   public String printNeighbours() {
     String textOut = "";
     for (Country neighbour : neighbours) {
@@ -50,8 +50,12 @@ public class Country {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null || getClass() != obj.getClass()) return false;
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
 
     Country other = (Country) obj;
     return name.equals(other.name);

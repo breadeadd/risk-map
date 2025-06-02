@@ -11,31 +11,23 @@ public class Graph {
   private Map<Country, List<Country>> adjNodes;
   private Map<String, Country> nameToCountry = new HashMap<>();
 
+  // intialising graph
   public Graph() {
     this.adjNodes = new HashMap<>();
   }
 
+  // adding nodes
   public void addNode(Country node) {
     adjNodes.putIfAbsent(node, new ArrayList<>());
     nameToCountry.putIfAbsent(node.getName(), node);
   }
 
+  // adding edges
   public void addEdge(Country node1, Country node2) {
     adjNodes.get(node1).add(node2);
   }
 
-  // might not need
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (Country n : adjNodes.keySet()) {
-      sb.append(n);
-      sb.append("->");
-      sb.append(adjNodes.get(n));
-      sb.append(System.lineSeparator());
-    }
-    return sb.toString();
-  }
-
+  // getting details
   public Country getCountryByName(String name) {
     Country country = nameToCountry.get(name);
     return country;
@@ -45,6 +37,7 @@ public class Graph {
     return adjNodes.getOrDefault(country, new ArrayList<>());
   }
 
+  // checks if input exists else exception thrown
   public Country checkCountryExists(String name) throws CountryNotFoundException {
     Country country = nameToCountry.get(name);
     if (country == null) {
@@ -54,7 +47,7 @@ public class Graph {
     return country;
   }
 
-  // will need to edit.
+  // bsf search for shortest route
   public List<Country> findShortestRoute(Country start, Country destination) {
     List<Country> visited = new ArrayList<>();
     Queue<Country> queue = new LinkedList<>();
@@ -69,14 +62,16 @@ public class Graph {
     while (!queue.isEmpty()) {
       Country current = queue.poll();
 
+      // break when destination is found
       if (current.equals(destination)) {
-        for (Country country = destination; country != null; country = parentMap.get(country))
+        for (Country country = destination; country != null; country = parentMap.get(country)) {
           // adds to the front of the list
           shortestPath.addFirst(country);
-
+        }
         break;
       }
 
+      // iterate through neighbours
       for (Country neighbour : adjNodes.get(current)) {
         if (!visited.contains(neighbour)) {
           visited.add(neighbour);
