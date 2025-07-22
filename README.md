@@ -1,5 +1,5 @@
 # 🌍 Risk Map Routing System
-A graph-based Java program that models a simplified world map of 42 countries (grouped into 6 continents) and finds optimal paths between countries. Developed as part of a course project to practice object-oriented design and graph algorithms.
+A graph-based Java program that models a simplified world map of 42 countries (grouped into 6 continents) and finds optimal paths between countries. Developed as part of SOFTENG281 to practice object-oriented design and graph algorithms.
 
 ---
 
